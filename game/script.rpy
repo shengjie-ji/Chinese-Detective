@@ -2,13 +2,10 @@
 init python:
     class RPGCharacter:
         def __init__(self, name, relationship, **kwargs):
-            # Create a Ren'Py Character object inside this class
             self.character = Character(name, **kwargs)
-            self.relationship = relationship  # Store relationship stats
-
+            self.relationship = relationship  
 
 init:
-
 
     ### Backgrounds
     image home_office = 'office.jpg'
@@ -29,8 +26,28 @@ init:
         'Memory'    : 90
         },
         color = (244, 3, 252)) 
-    define client   = Character('Client', color = (252, 90, 3)) 
-    define friend   = Character('Friend', color = (3, 28, 252)) 
+    define client   = RPGCharacter('Client', relationship = {
+        'Respect'   : 50,
+        'Fear'      : 20,
+        'Affection' : 20,
+        'Community' : 10,
+        'Motive'    : 'Concern',
+        'Flaw'      : 'Homeostasis',
+        'Stress'    : 25,
+        'Memory'    : 70
+        },
+        color = (252, 90, 3)) 
+    define bill   = RPGCharacter('Bill' relationship = {
+        'Respect'   : 20,
+        'Fear'      : 70,
+        'Affection' : 10,
+        'Community' : 10,
+        'Motive'    : 'Survive',
+        'Flaw'      : 'Scavenger',
+        'Stress'    : 70,
+        'Memory'    : 40
+        },
+        color = (3, 28, 252)) 
     define tutorial = Character("Tutorial", color = (3, 252, 223)) 
     define eva      = RPGCharacter("Eva", relationship = {
         'Respect'   : 80,
@@ -38,7 +55,7 @@ init:
         'Affection' : 90,
         'Community' : 20,
         'Motive'    : 'Peace',
-        'Flaw'      : 'Ambitionless',
+        'Flaw'      : 'Saint',
         'Stress'    : 10,
         'Memory'    : 50
         }, color = (252, 3, 3)) 
@@ -111,17 +128,6 @@ init:
             # Introduction Image 
             # add "unlocked_image_1.jpg" if persistent.image1_unlocked else "locked_image.jpg"
             textbutton "Return" action Return()
-
-
-
-'''
-renpy.clear_game_runtime() # Includes menu timing 
-renpy.music_start('')
-version = renpy.version()
-'''
-
-
-
 
 label start:
     
@@ -201,11 +207,38 @@ label act_one:
 
     ''' Add options here; since its a tutorial and its an RPG, you cant degrade it too poorly, but you can get an awkward interaction at worst, and a positive trivia at best '''
 
-    scene residence
+    scene bill_residence
 
-    narrator "Walking up to the third story and wondering why "
+    narrator "Walking up to the third story and wondering why people lived in buildings without an elevator, Song got to the unit listed on the key fob"
+    chi "305. This seems to be it."
+    narrator "The door opens after a little effort to overcome the friction of the door and the dirty rug."
+    narrator "At first glance the room could best be described as hand-me-downs from grandpa. There was a trash can full of take out boxes visible from the entrance."
+    narrator "On the ottoman in front of the couce, there were a few papers that looked like receipts"
+    narrator "The kitchen counter also had an assortment of items on it, most of which were partially obscured by plastic bags and takeout boxes."
 
-
+    menu:
+        "Check out the kitchen counter":
+            narrator "The kitchen counter "
+        "Check out the papers on the ottoman":
+            narrator ""
+        "Look for the bedroom":
+            narrator "Looking around for a bedroom, it became quickly apparent that this was a studio apartment"
+            chi "Lets see....yup theres a lever on the couch"
+            menu:
+                "Pull the lever":
+                    narrator "Song pulls the lever, and the bed springs out suddently into a bed."
+                    narrator "You hear a rip as the ottoman was damaged from a jagged edge of the old and worn couch pullout."
+                    chi "Dang"
+                    tutorial "In the course of your work, you may cause damage to the clients or the clients items."
+                    tutorial "Depending on how you attempt to manipulate the situation, either by being honest"
+                    tutorial "Or by being manipulatative"
+                    tutorial "Or even by lying by omission"
+                    tutorial "You can have different outcomes"
+        "Look inside the trash can":
+            narrator "With an audible sigh, Song removes the trash lid, ready for whatever may happen."
+            chi "Huh."
+            narrator "There was nothing inside the bin, in fact the bag looked like it was recently replaced."
+    
 
     jump act_two
 
