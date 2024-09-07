@@ -37,7 +37,7 @@ init:
         'Memory'    : 70
         },
         color = (252, 90, 3)) 
-    define bill   = RPGCharacter('Bill' relationship = {
+    define bill   = RPGCharacter('Bill', relationship = {
         'Respect'   : 20,
         'Fear'      : 70,
         'Affection' : 10,
@@ -144,7 +144,7 @@ label start:
     chi "Yeah, you said you had a problem? How can I help?"
     "The client looks around."
     client.character "I always thought they were bigger nowadays. I was a bit panicked so I went with the closest one, but I'm not sure this is the best option."
-    chi.character "I can't blame you, but if it helps, my reviews have been pretty good, and we try to keep our prices low."
+    chi "I can't blame you, but if it helps, my reviews have been pretty good, and we try to keep our prices low."
     client.character "We?"
     chi "We work with consultants that we call as needed for cases. I even have one for animals in case a lost animal is found by a shelter or something."
     client.character "Ah, well, sounds like you have a lot of experience, at least. In that case, can you help with a missing person's case?"
@@ -172,6 +172,11 @@ label start:
             $ inventory.append("Key to Residence")
         "This sounds a bit awkward":
             chi "Are you sure you are better off not reporting this to the cops?"
+            client.character "I had a little bit of trouble with the police, honestly I\'d rather not deal with them."
+            client.character "Oh especially since the reason he might have ran off is the betting."
+            chi "Is it so bad if its just you two as friends?"
+            client.character "I don\'t want to talk about it but its not just us."
+            chi "Oh, I get it. No problem."
         "No":
             chi "No"
     client.character "Wow, you really know a lot of people."
@@ -215,6 +220,7 @@ label act_one:
     narrator "At first glance the room could best be described as hand-me-downs from grandpa. There was a trash can full of take out boxes visible from the entrance."
     narrator "On the ottoman in front of the couce, there were a few papers that looked like receipts"
     narrator "The kitchen counter also had an assortment of items on it, most of which were partially obscured by plastic bags and takeout boxes."
+    narrator "Last but not least, there is a computer on a little end table, with the screen open up to what looks like a bunch of tabs."
 
     menu:
         "Check out the kitchen counter":
@@ -234,16 +240,30 @@ label act_one:
                     tutorial "Or by being manipulatative"
                     tutorial "Or even by lying by omission"
                     tutorial "You can have different outcomes"
+                    tutorial "For now, why don\'t you grab that piece of paper on the bedroll, and see what it has on it?"
+                    $ inventory.append("Losing Betting Slip")
+                    jump start
         "Look inside the trash can":
             narrator "With an audible sigh, Song removes the trash lid, ready for whatever may happen."
             chi "Huh."
             narrator "There was nothing inside the bin, in fact the bag looked like it was recently replaced."
-    
+            jump start
+        "I am done here":
+            chi "Time to leave-"
+            eva.character "Oh, Mr. Qi, what are you doing here? I saw Bill\'s door open and I was worried. I havent seen him in over a week."
+            chi "I am actually here to investiage that."
+
+            # Test Script
+            chi "I am here to find and kill him"
+            $ eva.relationship['Fear'] += 30
+            $ eva.relationship['Memory'] -= 15
 
     jump act_two
 
 
 label act_two:
+
+    show screen inventory_display
     
     narrator "Blah"
 

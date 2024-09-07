@@ -1,20 +1,26 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 127, in script
-    dre "This is a test message"
-Exception: Sayer b'dre' is not a function or string.
+  File "game/script.rpy", line 258, in script
+    $ eva.character.relationship['Fear'] += 30
+  File "game/script.rpy", line 258, in <module>
+    $ eva.character.relationship['Fear'] += 30
+AttributeError: 'ADVCharacter' object has no attribute 'relationship'
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 127, in script
-    dre "This is a test message"
-  File "/Users/shengjieji/Desktop/renpy-8.1.3-sdk/renpy/ast.py", line 907, in execute
-    raise Exception("Sayer %s is not a function or string." % self.who.encode("utf-8"))
-Exception: Sayer b'dre' is not a function or string.
+  File "game/script.rpy", line 258, in script
+    $ eva.character.relationship['Fear'] += 30
+  File "/Users/shengjieji/Desktop/renpy-8.1.3-sdk/renpy/ast.py", line 1138, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "/Users/shengjieji/Desktop/renpy-8.1.3-sdk/renpy/python.py", line 1122, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/script.rpy", line 258, in <module>
+    $ eva.character.relationship['Fear'] += 30
+AttributeError: 'ADVCharacter' object has no attribute 'relationship'
 
 macOS-10.16-x86_64-i386-64bit x86_64
 Ren'Py 8.1.3.23091805
 Chinese Detective 1.0
-Thu Sep  5 11:41:45 2024
+Sat Sep  7 11:34:39 2024
