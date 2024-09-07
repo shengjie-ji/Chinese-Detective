@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 40: invalid syntax
-    RPGCharacter('Bill' relationship = {\
-                         ^
+File "game/script.rpy", line 78: invalid syntax
+        "5 Dollars" : "A crisp five dollar bill."\
+                     ^
 
 Ren'Py Version: Ren'Py 8.1.3.23091805
-Sat Sep  7 11:28:39 2024
+Sat Sep  7 11:43:16 2024

@@ -73,7 +73,11 @@ init:
 
         on "hide" action Hide("inventory_description")
 
-    default inventory_items = {"Key to Residence" : "A key that supposedly opens the door to Bill\'s apartment door. We have been given permission to access it, but we should probably check with the super or doorman first."}
+    default inventory_items = {
+    "Key to Residence" : "A key that supposedly opens the door to Bill\'s apartment door. We have been given permission to access it, but we should probably check with the super or doorman first.",
+    "5 Dollars" : "A crisp five dollar bill.",
+    "Losing Betting Slip" : "A slip of paper iunno im lazy."
+     }
     default inventory = []
     default item_description = ""
 
@@ -257,6 +261,7 @@ label act_one:
             chi "I am here to find and kill him"
             $ eva.relationship['Fear'] += 30
             $ eva.relationship['Memory'] -= 15
+
 
     jump act_two
 
