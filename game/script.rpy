@@ -68,18 +68,20 @@ init:
             xalign 0.05
             yalign 0.1
 
-        textbutton "Inventory":
-            action ToggleScreen("inventory_description")
+        hbox:
+            textbutton "Inventory":
+                action ToggleScreen("inventory_description")
+                style "inv_button"
+            textbutton "Objectives":
+                action ToggleScreen("current_objectives")
+                style "inv_button"
 
         on "hide" action Hide("inventory_description")
 
-    default inventory_items = {
-    "Key to Residence" : "A key that supposedly opens the door to Bill\'s apartment door. We have been given permission to access it, but we should probably check with the super or doorman first.",
-    "5 Dollars" : "A crisp five dollar bill.",
-    "Losing Betting Slip" : "A slip of paper iunno im lazy."
-     }
-    default inventory = []
+    default inventory_items = {}
     default item_description = ""
+    default objectives = {}
+    default objective_description = ""
 
     style inv_button is frame:
         xsize 200
@@ -121,8 +123,37 @@ init:
 
         on "hide" action SetVariable("item_description", "")
 
-    ### Gallery
+    ### Objectives
+    screen current_objectives:
 
+        window:
+            background "#AAA9"
+            xsize 600
+            ysize 150
+            xalign 0.5
+            yalign 0.1
+
+        window: 
+            background "#99F9"
+            xsize 1290
+            ysize 600
+            xalign 0.5
+            yalign 0.7
+            hbox:
+                box_wrap True
+                box_wrap_spacing 10
+                spacing 10
+                xoffset 20
+                yoffset 20
+                style_prefix "obj"
+                for objective in objectives:
+                    textbutton objective:
+                        action SetVariable("objective_description", objectives.get(objective))
+                        selected False
+
+        on "hide" action SetVariable("objective_description", "")
+
+    ### Gallery
     screen gallery:
         tag menu
 
@@ -141,7 +172,11 @@ label start:
 
 
     # Testing
-    dre.character "This is a test message"
+
+    dre.character "Look you found 5 dollars in your pocket"
+    $ inventory_items["5 Dollars"] = "A crisp five dollar bill."
+    narrator "OBTAINED \[5 Dollars\]"
+    $ objectives['Tutorial Quest'] = "kfnfknvfkldnlknfnv"
 
     # Script 
     client.character "Is this the detective agency? I called ahead."
@@ -173,7 +208,7 @@ label start:
     menu:
         "Sure":
             chi "Sure I'll take the case."
-            $ inventory.append("Key to Residence")
+            $ inventory_items["Key to Residence"] = "A key that supposedly opens the door to Bill\'s apartment door. We have been given permission to access it, but we should probably check with the super or doorman first."
         "This sounds a bit awkward":
             chi "Are you sure you are better off not reporting this to the cops?"
             client.character "I had a little bit of trouble with the police, honestly I\'d rather not deal with them."
@@ -226,6 +261,8 @@ label act_one:
     narrator "The kitchen counter also had an assortment of items on it, most of which were partially obscured by plastic bags and takeout boxes."
     narrator "Last but not least, there is a computer on a little end table, with the screen open up to what looks like a bunch of tabs."
 
+
+label bill_residence_options:
     menu:
         "Check out the kitchen counter":
             narrator "The kitchen counter "
@@ -245,23 +282,49 @@ label act_one:
                     tutorial "Or even by lying by omission"
                     tutorial "You can have different outcomes"
                     tutorial "For now, why don\'t you grab that piece of paper on the bedroll, and see what it has on it?"
-                    $ inventory.append("Losing Betting Slip")
-                    jump start
+                    $ inventory_items["Losing Betting Slip"] = "A slip of paper iunno im lazy."
+                    jump bill_residence_options
         "Look inside the trash can":
             narrator "With an audible sigh, Song removes the trash lid, ready for whatever may happen."
             chi "Huh."
             narrator "There was nothing inside the bin, in fact the bag looked like it was recently replaced."
-            jump start
+            jump bill_residence_options
         "I am done here":
             chi "Time to leave-"
             eva.character "Oh, Mr. Qi, what are you doing here? I saw Bill\'s door open and I was worried. I havent seen him in over a week."
-            chi "I am actually here to investiage that."
+            chi "I am actually here to investigate that."
+            eva.character "Oh? That\'s concerning to hear, but if you are on the case I\'m sure it will turn out all right."
+            eva.character "Don\'t let me get in the way, I will get out of your hair-"
+            chi "Actually, I am quite glad you are here, do you mind if I ask a few questions?"
+            eva.character "I have a roast in the oven but sure dear. "
 
-            # Test Script
-            chi "I am here to find and kill him"
+            jump eva_questioning
+
+label eva_questioning:
+
+    menu:
+        "What was your impression of him as a neighbor?":
+            eva.character "Oh he was nice enough, he would have friends over quite often. They could get a bit loud at times"
+            narrator "She pauses to think on what she said"
+            eva.character "But honestly it was nice to have the sounds of people, it has been a while for me since my husband passed"
+            menu:
+                "I\'m sorry to hear that":
+                    eva.character "Thank you dear, but I am sure he is in a good place, and I hope to get there too one day."
+                    $ eva.relationship['Memory'] -= 10
+                    $ eva.relationship['Respect'] -= 10
+                "\[Community Manager\] There is a ballroom dance class at the rec center each Thursday.":
+                    narrator "Eva noticably lit up at the news"
+                    eva.character "Oh that sounds lovely dear, can you help me sign up? I can make time for it this week if possible"
+                    chi "Of course, I\'ll see if I can\'t do it on the way back to my office."
+                    narrator "Side Quest \[Sign Eva up for Ballroom\] Started"
+                    $ current_objectives['Sign Eva up for Ballroom'] = "In Progress"
+
+        # Test Script
+        "I am here to find and kill him":
             $ eva.relationship['Fear'] += 30
             $ eva.relationship['Memory'] -= 15
 
+    narrator "End of Act 1"
 
     jump act_two
 
