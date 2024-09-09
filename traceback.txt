@@ -1,80 +1,26 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 182, in script
-    client.character "Is this the detective agency? I called ahead."
-  File "game/script.rpy", line 127, in execute
-    screen current_objectives:
-  File "game/script.rpy", line 127, in execute
-    screen current_objectives:
-  File "game/script.rpy", line 136, in execute
-    window:
-  File "game/script.rpy", line 142, in execute
-    hbox:
-  File "game/script.rpy", line 149, in execute
-    for objective in objectives:
-  File "game/script.rpy", line 150, in execute
-    textbutton objective:
-  File "game/script.rpy", line 150, in keywords
-    textbutton objective:
-  File "game/script.rpy", line 151, in <module>
-    action SetVariable("objective_description", objectives.get(item))
-NameError: name 'item' is not defined
+  File "game/script.rpy", line 327, in script
+    $ current_objectives['Sign Eva up for Ballroom'] = "In Progress"
+  File "game/script.rpy", line 327, in <module>
+    $ current_objectives['Sign Eva up for Ballroom'] = "In Progress"
+NameError: name 'current_objectives' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 182, in script
-    client.character "Is this the detective agency? I called ahead."
-  File "/Users/shengjieji/Desktop/renpy-8.1.3-sdk/renpy/ast.py", line 930, in execute
-    renpy.exports.say(who, what, *args, **kwargs)
-  File "/Users/shengjieji/Desktop/renpy-8.1.3-sdk/renpy/exports.py", line 1474, in say
-    who(what, *args, **kwargs)
-  File "/Users/shengjieji/Desktop/renpy-8.1.3-sdk/renpy/character.py", line 1352, in __call__
-    self.do_display(who, what, cb_args=self.cb_args, dtt=dtt, **display_args)
-  File "/Users/shengjieji/Desktop/renpy-8.1.3-sdk/renpy/character.py", line 1003, in do_display
-    display_say(who,
-  File "/Users/shengjieji/Desktop/renpy-8.1.3-sdk/renpy/character.py", line 693, in display_say
-    rv = renpy.ui.interact(mouse='say', type=type, roll_forward=roll_forward)
-  File "/Users/shengjieji/Desktop/renpy-8.1.3-sdk/renpy/ui.py", line 299, in interact
-    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
-  File "/Users/shengjieji/Desktop/renpy-8.1.3-sdk/renpy/display/core.py", line 3582, in interact
-    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
-  File "/Users/shengjieji/Desktop/renpy-8.1.3-sdk/renpy/display/core.py", line 4055, in interact_core
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "/Users/shengjieji/Desktop/renpy-8.1.3-sdk/renpy/display/core.py", line 684, in visit_all
-    d.visit_all(callback, seen)
-  File "/Users/shengjieji/Desktop/renpy-8.1.3-sdk/renpy/display/core.py", line 684, in visit_all
-    d.visit_all(callback, seen)
-  File "/Users/shengjieji/Desktop/renpy-8.1.3-sdk/renpy/display/core.py", line 684, in visit_all
-    d.visit_all(callback, seen)
-  File "/Users/shengjieji/Desktop/renpy-8.1.3-sdk/renpy/display/screen.py", line 476, in visit_all
-    callback(self)
-  File "/Users/shengjieji/Desktop/renpy-8.1.3-sdk/renpy/display/core.py", line 4055, in <lambda>
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "/Users/shengjieji/Desktop/renpy-8.1.3-sdk/renpy/display/screen.py", line 487, in per_interact
-    self.update()
-  File "/Users/shengjieji/Desktop/renpy-8.1.3-sdk/renpy/display/screen.py", line 680, in update
-    self.screen.function(**self.scope)
-  File "game/script.rpy", line 127, in execute
-    screen current_objectives:
-  File "game/script.rpy", line 127, in execute
-    screen current_objectives:
-  File "game/script.rpy", line 136, in execute
-    window:
-  File "game/script.rpy", line 142, in execute
-    hbox:
-  File "game/script.rpy", line 149, in execute
-    for objective in objectives:
-  File "game/script.rpy", line 150, in execute
-    textbutton objective:
-  File "game/script.rpy", line 150, in keywords
-    textbutton objective:
-  File "game/script.rpy", line 151, in <module>
-    action SetVariable("objective_description", objectives.get(item))
-NameError: name 'item' is not defined
+  File "game/script.rpy", line 327, in script
+    $ current_objectives['Sign Eva up for Ballroom'] = "In Progress"
+  File "/Users/shengjieji/Desktop/renpy-8.1.3-sdk/renpy/ast.py", line 1138, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "/Users/shengjieji/Desktop/renpy-8.1.3-sdk/renpy/python.py", line 1122, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/script.rpy", line 327, in <module>
+    $ current_objectives['Sign Eva up for Ballroom'] = "In Progress"
+NameError: name 'current_objectives' is not defined
 
 macOS-10.16-x86_64-i386-64bit x86_64
 Ren'Py 8.1.3.23091805
 Chinese Detective 1.0
-Sun Sep  8 12:45:25 2024
+Sun Sep  8 22:45:13 2024
