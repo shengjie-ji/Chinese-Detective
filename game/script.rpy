@@ -110,6 +110,12 @@
             # add "unlocked_image_1.jpg" if persistent.image1_unlocked else "locked_image.jpg"
             textbutton "Return" action Return()
 
+
+# Flags
+    default divine_belief = False
+
+
+
 label start:
     
     # Transition 
@@ -117,12 +123,14 @@ label start:
     scene bg home_office with dissolve
 
 
-    # Testing
-
-    dre.character "Look you found 5 dollars in your pocket"
+    narrator "The story begins in the seat of the Qi Agency; a private eye agency where you, Song Qi, are the sole dick working cases for the people of the community of Forest Hills."
+    narrator "A neighborhood in Queens, NY that, despite its small size and large home, is home to 100,000 residents, you are kept quite busy on a week to week basis."
+    narrator "You hear a knock on your door"
+    chi.character "Come in, the door is unlocked"
+    narrator "Before the man comes in and starts act one, lets give you a little freebie"
     $ inventory_items["5 Dollars"] = "A crisp five dollar bill."
     narrator "OBTAINED \[5 Dollars\]"
-    $ objectives['Tutorial Quest'] = "kfnfknvfkldnlknfnv"
+    $ objectives['Complete Act One'] = "In Progress"
 
     # Script 
     client.character "Is this the detective agency? I called ahead."
@@ -142,7 +150,7 @@ label start:
     "Writes down the information."
     chi.character "Gotcha, that was last Sunday, right?"
     client.character "Yeah."
-    chi"So this would have been almost a week? Was this a long time for him not to contact you?"
+    chi.character "So this would have been almost a week? Was this a long time for him not to contact you?"
     client.character "Yeah, well, we don't really chat much, but we like to hang out for poker night, and he would at least text one of us if he wasn't coming."
     chi.character "Okay. So, good news: I can take this case on. As a disclaimer, I am not allowed by law to tail anyone or offer surveillance in any restricted area. With those conditions, would you still like to hire our services?"
     client.character "Honestly, yeah. It's not like he or I are spies or anything. I just want to know if he's hiding in a hotel nearby or something. He can't have gotten far; his car is still parked nearby. Here, a key to his place; we keep each other's for emergencies before you ask about how I got it or whatever."
@@ -155,6 +163,10 @@ label start:
         "Sure":
             chi.character "Sure I'll take the case."
             $ inventory_items["Key to Residence"] = "A key that supposedly opens the door to Bill\'s apartment door. We have been given permission to access it, but we should probably check with the super or doorman first."
+            client.character "Great, it says on the key fob, but he lives at 145 108th Street, and the apartment is unit 305."
+            chi.character "If you don\'t mind, I assume that you are in contact with his doorman or super if you have his key? Can you call ahead for me?"
+            client.character "Oh sure, I just assumed it would be ok, apologies."
+            narrator "He averts his eyes a bit from you"
         "This sounds a bit awkward":
             chi.character "Are you sure you are better off not reporting this to the cops?"
             client.character "I had a little bit of trouble with the police, honestly I\'d rather not deal with them."
@@ -164,6 +176,20 @@ label start:
             chi.character "Oh, I get it. No problem."
         "No":
             chi.character "No"
+            client.character "Why?"
+            chi.character "I am operating as a detective or a federal agent, I can\'t go into someones house like that, even if you are giving me the key like this."
+            client.character "Oh."
+            client.character "In that case I can look around for you I guess? Maybe take a picture? I will not promise I can see things as you can, but you would have to wait until tonight."
+            client.character "Also, just for the record, I get it, but you kinda came off as a jerk. So since I am also putting in some work, I think its fair you give me a discount."
+            client.character "How much was it again for your services?"
+
+            menu:
+                '\[Lie\]\: It costs 1500, but I can make it 1000 and we call it even?':
+                    "Blah"
+                'I usually charge 1000 for a search of this scale, but 800 sounds reasonable.':
+                    "Blah"
+
+
     client.character "Wow, you really know a lot of people."
     chi.character "Yeah, I specialize in the Forest Gardens area, so I figured you guys lived close by."
     chi.character "I'll go take a look later this morning. Anything I should know about before I go? Also, I'll need your contact information, email and phone, phone preferred."
@@ -173,6 +199,11 @@ label start:
     chi.character "I can try, but you'll need to go down to the station across the street first. I can follow up for you, though. Don't worry, it takes five minutes. Just tell them chi.character sent you."
     client.character "Awesome, honestly I feel great about this already. Thanks, man."
     chi.character "No problem, have a nice day."
+    narrator "You have the client fill out some paperwork, as well as some contact information in case you reach any breakthroughs in the case"
+    narrator "As he leaves with an awkward shuffle, you realize you never asked him name."
+    narrator "You look down to see what information he put down"
+    chi.character "Edward Collims, 123-456-7890..."
+    chi.character "He lives around the area, too. I guess this was his closest bet. Doesn\'t hurt that he probably planned to get a discount in the first place."
 
     jump act_one
 
@@ -243,6 +274,7 @@ label bill_residence_options:
             eva.character "Don\'t let me get in the way, I will get out of your hair-"
             chi.character "Actually, I am quite glad you are here, do you mind if I ask a few questions?"
             eva.character "I have a roast in the oven but sure dear. "
+            chi.character "Appreciate it"
 
             jump eva_questioning
 
@@ -258,12 +290,27 @@ label eva_questioning:
                     eva.character "Thank you dear, but I am sure he is in a good place, and I hope to get there too one day."
                     $ eva.relationship['Memory'] -= 10
                     $ eva.relationship['Respect'] -= 10
+                    chi.character "I\'m sure you will, you are too kind not to."
+                    eva.character "Do you beleive in the divine, Mr. Qi?"
+                    menu:
+                        "Yes":
+                            chi.character "Yes"
+                            eva.character "That is lovely to hear, my dear. I don\'t mind too much what someone beleives in, as long as they believe in something."
+                            chi.character "Thank you, Miss Eva."
+                            divine_belief = True
+                        "No":
+                            chi.character "No"
+                            eva.character "No, I suppose not. It is not terribly popular amongst the younger generation, is it?"
+                            eva.character "But I hope you find it someday, however it may appear to you. It is just too important not to beleive in something."
+                            chi.character "... Thank you, Miss Eva."
+                            divine_belief = False
+
                 "\[Community Manager\] There is a ballroom dance class at the rec center each Thursday.":
                     narrator "Eva noticably lit up at the news"
                     eva.character "Oh that sounds lovely dear, can you help me sign up? I can make time for it this week if possible"
                     chi.character "Of course, I\'ll see if I can\'t do it on the way back to my office."
                     narrator "Side Quest \[Sign Eva up for Ballroom\] Started"
-                    $ current_objectives['Sign Eva up for Ballroom'] = "In Progress"
+                    $ objectives['Sign Eva up for Ballroom'] = "In Progress"
 
         # Test Script
         "I am here to find and kill him":
@@ -279,7 +326,7 @@ label act_two:
 
     show screen inventory_display
     
-    narrator "Blah"
+    narrator "\[Start of Act Two\]"
 
     return
 
