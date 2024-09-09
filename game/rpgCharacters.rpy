@@ -6,7 +6,6 @@ init -99 python:
           self.relationship = relationship  
 
 ### Characters
-define chi      = Character('Song Qi', color = (19, 252, 3)) 
 define dre      = RPGCharacter('Drita Xhaferi', relationship = {
     'Respect'   : 70,
     'Fear'      : 20,

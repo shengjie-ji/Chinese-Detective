@@ -126,53 +126,53 @@ label start:
 
     # Script 
     client.character "Is this the detective agency? I called ahead."
-    chi "Yeah, you said you had a problem? How can I help?"
+    chi.character "Yeah, you said you had a problem? How can I help?"
     "The client looks around."
     client.character "I always thought they were bigger nowadays. I was a bit panicked so I went with the closest one, but I'm not sure this is the best option."
-    chi "I can't blame you, but if it helps, my reviews have been pretty good, and we try to keep our prices low."
+    chi.character "I can't blame you, but if it helps, my reviews have been pretty good, and we try to keep our prices low."
     client.character "We?"
-    chi "We work with consultants that we call as needed for cases. I even have one for animals in case a lost animal is found by a shelter or something."
+    chi.character "We work with consultants that we call as needed for cases. I even have one for animals in case a lost animal is found by a shelter or something."
     client.character "Ah, well, sounds like you have a lot of experience, at least. In that case, can you help with a missing person's case?"
-    chi "Sure. Tell me the story and why you're concerned."
+    chi.character "Sure. Tell me the story and why you're concerned."
     client.character "Basically, I had a bet with this friend of mine, and he lost."
     client.character "We've been friends since we were kids, so when he would complain about the bet amount, I told him we could back out, but I guess he was being stubborn." 
     client.character "Anyways, after he lost the bet, I figured I would give him some time to grieve before asking for the money."
-    chi "How much was the amount, and what was the bet about?"
+    chi.character "How much was the amount, and what was the bet about?"
     client.character "5000, and whether the Mets were going to sweep their game against the Marlins."   
     "Writes down the information."
-    chi "Gotcha, that was last Sunday, right?"
+    chi.character "Gotcha, that was last Sunday, right?"
     client.character "Yeah."
     chi"So this would have been almost a week? Was this a long time for him not to contact you?"
     client.character "Yeah, well, we don't really chat much, but we like to hang out for poker night, and he would at least text one of us if he wasn't coming."
-    chi "Okay. So, good news: I can take this case on. As a disclaimer, I am not allowed by law to tail anyone or offer surveillance in any restricted area. With those conditions, would you still like to hire our services?"
+    chi.character "Okay. So, good news: I can take this case on. As a disclaimer, I am not allowed by law to tail anyone or offer surveillance in any restricted area. With those conditions, would you still like to hire our services?"
     client.character "Honestly, yeah. It's not like he or I are spies or anything. I just want to know if he's hiding in a hotel nearby or something. He can't have gotten far; his car is still parked nearby. Here, a key to his place; we keep each other's for emergencies before you ask about how I got it or whatever."
-    chi "I guess it can't hurt. I know the building super, so at worst, it'll be an apology for wasting his time."
+    chi.character "I guess it can't hurt. I know the building super, so at worst, it'll be an apology for wasting his time."
 
     client.character "Awesome. So are you saying you\'ll take the case?"
     narrator "He takes a small key fob out of his pocket, with one of the medium sized keys pointed out at you."
     
     menu:
         "Sure":
-            chi "Sure I'll take the case."
+            chi.character "Sure I'll take the case."
             $ inventory_items["Key to Residence"] = "A key that supposedly opens the door to Bill\'s apartment door. We have been given permission to access it, but we should probably check with the super or doorman first."
         "This sounds a bit awkward":
-            chi "Are you sure you are better off not reporting this to the cops?"
+            chi.character "Are you sure you are better off not reporting this to the cops?"
             client.character "I had a little bit of trouble with the police, honestly I\'d rather not deal with them."
             client.character "Oh especially since the reason he might have ran off is the betting."
-            chi "Is it so bad if its just you two as friends?"
+            chi.character "Is it so bad if its just you two as friends?"
             client.character "I don\'t want to talk about it but its not just us."
-            chi "Oh, I get it. No problem."
+            chi.character "Oh, I get it. No problem."
         "No":
-            chi "No"
+            chi.character "No"
     client.character "Wow, you really know a lot of people."
-    chi "Yeah, I specialize in the Forest Gardens area, so I figured you guys lived close by."
-    chi "I'll go take a look later this morning. Anything I should know about before I go? Also, I'll need your contact information, email and phone, phone preferred."
+    chi.character "Yeah, I specialize in the Forest Gardens area, so I figured you guys lived close by."
+    chi.character "I'll go take a look later this morning. Anything I should know about before I go? Also, I'll need your contact information, email and phone, phone preferred."
     client.character "Oh yeah, got it. *scribbles* And nah, he lived alone, and he didn't mention a girlfriend or anything."
-    chi "That works. Okay, if I find out anything, I'll send you a message. My rate is per job, but for something like this, I would charge per day. I recommend you file a missing person's report right after if you haven't already. It can be a bit awkward, but it's for safety."
+    chi.character "That works. Okay, if I find out anything, I'll send you a message. My rate is per job, but for something like this, I would charge per day. I recommend you file a missing person's report right after if you haven't already. It can be a bit awkward, but it's for safety."
     client.character "Got it. Do you mind starting that? I'm already late for my job, and I kind of expected to have 5 grand more than I currently do."
-    chi "I can try, but you'll need to go down to the station across the street first. I can follow up for you, though. Don't worry, it takes five minutes. Just tell them Chi sent you."
+    chi.character "I can try, but you'll need to go down to the station across the street first. I can follow up for you, though. Don't worry, it takes five minutes. Just tell them chi.character sent you."
     client.character "Awesome, honestly I feel great about this already. Thanks, man."
-    chi "No problem, have a nice day."
+    chi.character "No problem, have a nice day."
 
     jump act_one
 
@@ -187,9 +187,9 @@ label act_one:
     narrator "As he walked down the block, Song happened upon a regular customer and neighbor. A seventy year old widower with a son on the West Coast, Eva noticed him first."
     eva.character "Well look who it is, the helpful detective. Having a nice day? Mustn\'t to be too difficult, with weather like this."
     narrator "EVA motions up to the sky with a slight nod"
-    chi "Good Afternoon, Miss Eva, is everything going well? Is your dog still safe and sound at home?"
+    chi.character "Good Afternoon, Miss Eva, is everything going well? Is your dog still safe and sound at home?"
     eva.character "Why yes and thank you so much again for that. I admit I did not expect a detec-"
-    chi "Private Eye, ma\'am"
+    chi.character "Private Eye, ma\'am"
     eva.character "of course, I would think that working with pets would be too specific a case, but I guess you proved me wrong, and Muffins has you to thank."
     tutorial "This is Eva, a neighbor who you have helped on several occasions; as a result she has a lot of trust in your abilities, and a lot of gratitude for your help."
     tutorial "As a result she has stats that indicate her relationship and impression of you. Based on your dialouge options, you can improve or degrade certain impressions."
@@ -200,7 +200,7 @@ label act_one:
     scene bill_residence
 
     narrator "Walking up to the third story and wondering why people lived in buildings without an elevator, Song got to the unit listed on the key fob"
-    chi "305. This seems to be it."
+    chi.character "305. This seems to be it."
     narrator "The door opens after a little effort to overcome the friction of the door and the dirty rug."
     narrator "At first glance the room could best be described as hand-me-downs from grandpa. There was a trash can full of take out boxes visible from the entrance."
     narrator "On the ottoman in front of the couce, there were a few papers that looked like receipts"
@@ -216,12 +216,12 @@ label bill_residence_options:
             narrator ""
         "Look for the bedroom":
             narrator "Looking around for a bedroom, it became quickly apparent that this was a studio apartment"
-            chi "Lets see....yup theres a lever on the couch"
+            chi.character "Lets see....yup theres a lever on the couch"
             menu:
                 "Pull the lever":
                     narrator "Song pulls the lever, and the bed springs out suddently into a bed."
                     narrator "You hear a rip as the ottoman was damaged from a jagged edge of the old and worn couch pullout."
-                    chi "Dang"
+                    chi.character "Dang"
                     tutorial "In the course of your work, you may cause damage to the clients or the clients items."
                     tutorial "Depending on how you attempt to manipulate the situation, either by being honest"
                     tutorial "Or by being manipulatative"
@@ -232,16 +232,16 @@ label bill_residence_options:
                     jump bill_residence_options
         "Look inside the trash can":
             narrator "With an audible sigh, Song removes the trash lid, ready for whatever may happen."
-            chi "Huh."
+            chi.character "Huh."
             narrator "There was nothing inside the bin, in fact the bag looked like it was recently replaced."
             jump bill_residence_options
         "I am done here":
-            chi "Time to leave-"
+            chi.character "Time to leave-"
             eva.character "Oh, Mr. Qi, what are you doing here? I saw Bill\'s door open and I was worried. I havent seen him in over a week."
-            chi "I am actually here to investigate that."
+            chi.character "I am actually here to investigate that."
             eva.character "Oh? That\'s concerning to hear, but if you are on the case I\'m sure it will turn out all right."
             eva.character "Don\'t let me get in the way, I will get out of your hair-"
-            chi "Actually, I am quite glad you are here, do you mind if I ask a few questions?"
+            chi.character "Actually, I am quite glad you are here, do you mind if I ask a few questions?"
             eva.character "I have a roast in the oven but sure dear. "
 
             jump eva_questioning
@@ -261,7 +261,7 @@ label eva_questioning:
                 "\[Community Manager\] There is a ballroom dance class at the rec center each Thursday.":
                     narrator "Eva noticably lit up at the news"
                     eva.character "Oh that sounds lovely dear, can you help me sign up? I can make time for it this week if possible"
-                    chi "Of course, I\'ll see if I can\'t do it on the way back to my office."
+                    chi.character "Of course, I\'ll see if I can\'t do it on the way back to my office."
                     narrator "Side Quest \[Sign Eva up for Ballroom\] Started"
                     $ current_objectives['Sign Eva up for Ballroom'] = "In Progress"
 
