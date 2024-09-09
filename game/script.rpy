@@ -1,11 +1,4 @@
-﻿# Using Composition
-init python:
-    class RPGCharacter:
-        def __init__(self, name, relationship, **kwargs):
-            self.character = Character(name, **kwargs)
-            self.relationship = relationship  
-
-init:
+﻿init:
 
     ### Backgrounds
     image home_office = 'office.jpg'
@@ -13,58 +6,9 @@ init:
     ### Screen Init
     $ config.window_title = 'Chinatown Detective'
 
-    ### Characters
-    define chi      = Character('Song Qi', color = (19, 252, 3)) 
-    define dre      = RPGCharacter('Drita Xhaferi', relationship = {
-        'Respect'   : 70,
-        'Fear'      : 20,
-        'Affection' : 70,
-        'Community' : 40,
-        'Motive'    : 'Novelty',
-        'Flaw'      : 'Gelangweilt',
-        'Stress'    : 30,
-        'Memory'    : 90
-        },
-        color = (244, 3, 252)) 
-    define client   = RPGCharacter('Client', relationship = {
-        'Respect'   : 50,
-        'Fear'      : 20,
-        'Affection' : 20,
-        'Community' : 10,
-        'Motive'    : 'Concern',
-        'Flaw'      : 'Homeostasis',
-        'Stress'    : 25,
-        'Memory'    : 70
-        },
-        color = (252, 90, 3)) 
-    define bill   = RPGCharacter('Bill', relationship = {
-        'Respect'   : 20,
-        'Fear'      : 70,
-        'Affection' : 10,
-        'Community' : 10,
-        'Motive'    : 'Survive',
-        'Flaw'      : 'Scavenger',
-        'Stress'    : 70,
-        'Memory'    : 40
-        },
-        color = (3, 28, 252)) 
-    define tutorial = Character("Tutorial", color = (3, 252, 223)) 
-    define eva      = RPGCharacter("Eva", relationship = {
-        'Respect'   : 80,
-        'Fear'      : 10,
-        'Affection' : 90,
-        'Community' : 20,
-        'Motive'    : 'Peace',
-        'Flaw'      : 'Saint',
-        'Stress'    : 10,
-        'Memory'    : 50
-        }, color = (252, 3, 3)) 
-
     ### Inventory System
     screen inventory_display:
         zorder 92
-        modal True
-        tag menu
         frame:
             background "#9F99"
             xalign 0.05
@@ -77,11 +21,8 @@ init:
             textbutton "Objectives":
                 action ToggleScreen("current_objectives")
                 style "inv_button"
-            #textbutton "Gallery":
-            #    action ToggleScreen("gallery")
 
         on "hide" action Hide("inventory_description")
-        on "hide" action Hide("objective_description")
 
     default inventory_items = {}
     default item_description = ""
@@ -130,8 +71,7 @@ init:
 
     ### Objectives
     screen current_objectives:
-        modal True
-        tag menu
+
         window:
             background "#AAA9"
             xsize 600
@@ -160,16 +100,15 @@ init:
         on "hide" action SetVariable("objective_description", "")
 
     ### Gallery
-    #screen gallery:
-    #    tag menu
-    #    modal True
-    #    grid 3 2:
-    #        xalign 0.5 yalign 0.5
+    screen gallery:
+        tag menu
+
+        grid 3 2:
+            xalign 0.5 yalign 0.5
 
             # Introduction Image 
             # add "unlocked_image_1.jpg" if persistent.image1_unlocked else "locked_image.jpg"
-    #        textbutton "Return" action Return()
-
+            textbutton "Return" action Return()
 
 label start:
     
@@ -177,14 +116,13 @@ label start:
     show screen inventory_display
     scene bg home_office with dissolve
 
-    narrator "You are a private eye by the name of Song Qi. Having operated in Forest Hills for almost six years, you learned a lot about the local scene."
-    narrator "Starting from a modest Wework office, you ended up at much the same, but with a lot more business and experience under your belt."
-    tutorial "Let\'s get you started with some cash, you will earn cash based on how well you do with certain subquests."
+
+    # Testing
+
+    dre.character "Look you found 5 dollars in your pocket"
     $ inventory_items["5 Dollars"] = "A crisp five dollar bill."
     narrator "OBTAINED \[5 Dollars\]"
-    tutorial "Now lets give you an objective to pass through."
-    narrator "Started Objective \[Complete Act One\]"
-    $ objectives['Complete Act One'] = "In Progress"
+    $ objectives['Tutorial Quest'] = "kfnfknvfkldnlknfnv"
 
     # Script 
     client.character "Is this the detective agency? I called ahead."
@@ -212,18 +150,11 @@ label start:
 
     client.character "Awesome. So are you saying you\'ll take the case?"
     narrator "He takes a small key fob out of his pocket, with one of the medium sized keys pointed out at you."
-
-    jump client_agreement
     
-label client_agreement:
-
     menu:
         "Sure":
             chi "Sure I'll take the case."
             $ inventory_items["Key to Residence"] = "A key that supposedly opens the door to Bill\'s apartment door. We have been given permission to access it, but we should probably check with the super or doorman first."
-            client.character "Oh thank you. Here, this is a key to his place on 4534 108th Street. It says on the key fob but he lives in unit 305."
-            chi "Got it, thanks."
-            jump finalize
         "This sounds a bit awkward":
             chi "Are you sure you are better off not reporting this to the cops?"
             client.character "I had a little bit of trouble with the police, honestly I\'d rather not deal with them."
@@ -231,14 +162,8 @@ label client_agreement:
             chi "Is it so bad if its just you two as friends?"
             client.character "I don\'t want to talk about it but its not just us."
             chi "Oh, I get it. No problem."
-            jump finalize
         "No":
             chi "No"
-            client.character "Fine. I have to get out of here anyways. You know you did\'nt have to take the case, but there was no need to jerk me around, dick."
-            jump ending_one
-
-
-label finalize:
     client.character "Wow, you really know a lot of people."
     chi "Yeah, I specialize in the Forest Gardens area, so I figured you guys lived close by."
     chi "I'll go take a look later this morning. Anything I should know about before I go? Also, I'll need your contact information, email and phone, phone preferred."
@@ -338,7 +263,7 @@ label eva_questioning:
                     eva.character "Oh that sounds lovely dear, can you help me sign up? I can make time for it this week if possible"
                     chi "Of course, I\'ll see if I can\'t do it on the way back to my office."
                     narrator "Side Quest \[Sign Eva up for Ballroom\] Started"
-                    $ objectives['Sign Eva up for Ballroom'] = "In Progress"
+                    $ current_objectives['Sign Eva up for Ballroom'] = "In Progress"
 
         # Test Script
         "I am here to find and kill him":
@@ -346,11 +271,6 @@ label eva_questioning:
             $ eva.relationship['Memory'] -= 15
 
     narrator "End of Act 1"
-
-    narrator "Completed \[Tutorial Quest\] You Earned a Skeleton Key\[1\]"
-    $ inventory_items['Skeleton Key\[1\]'] = "A key that opens the simplist of locks. Still useful."
-    $ objectives.pop('Tutorial Quest')
-
 
     jump act_two
 
@@ -364,9 +284,6 @@ label act_two:
     return
 
 
-label ending_one:
-
-    narrator "FIN"
 
 
 
