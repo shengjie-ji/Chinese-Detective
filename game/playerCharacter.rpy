@@ -22,4 +22,5 @@ define chi      = PlayerCharacter('Song Qi', stats = {
     'Checking Account'  : 0
     },
     path = "",
+    perks = [],
     color = (19, 252, 3)) 

@@ -1,6 +1,9 @@
 ﻿# 184 | 252
 label start:
     
+    # Flags
+    default lie_to_client = False
+
     # Transition 
     show screen inventory_display
     scene bg home_office with dissolve
@@ -24,11 +27,14 @@ label start:
             $ chi.character.stats['Tech Sector'] += 50
             $ chi.character.stats['Gamer'] += 50
             $ chi.character.stats['Side Hustle'] += 50
+            narrator "4000 Added to your Checking Account"
             $ chi.character.stats['Checking Account'] += 4000
         "I wanted to see the world":
             narrator "You knew academics were important, but you also knew life was meant to be lived."
             narrator "You applied for a larger liberal arts college in the middle of nowhere, before proceeding to be nowhere in the country for most of the year."
             narrator "Costs were something you tried hard to budget for, but traveling around was never going to be free, either."
+            narrator "You decided to take on a PhD, but when it took longer than expected, a break seemed liked the best idea"
+            narrator "Ironically, you decided to go home and start a business. After all it might make you some money, and if it fails, thats a good time to go back"
             narrator "\[Debt\] Increased Moderately"
             narrator "\[Socialite\],\[Reader\],\Eating Out\],,\[Casual Sex\] Increased"
             $ chi.character.path = 'Traveler'
@@ -36,12 +42,14 @@ label start:
             $ chi.character.stats['Reader'] += 20
             $ chi.character.stats['Eating Out'] += 50
             $ chi.character.stats['Casual Sex'] += 30
+            narrator "-2000 Added to your Checking Account"
             $ chi.character.stats['Checking Account'] -= 2000
         "Having fun while my body and time were mine":
             narrator "It wasn\'t being bad at school that stopped you from caring. It was just not as interesting as what life had to offer."
             narrator "After making friends with some people that didn\'t take things as seriously, you started, for the first time since you were a kid, having fun."
             narrator "You were smart enough to keep yourself out of most trouble, but looking for novelty and quite honestly fun led to a few bumps and scars. But you liked that."   
             narrator "When you came back to settle down a bit you were out of money, but a world of experience meant you built up friends quickly."
+            narrator "As a joke you told a friend at a party that you would make a good detective, and one lesson in how airtags work later, here we are."
             narrator "\[Socialite\],\[Raver\],\Eating Out\],,\[Casual Sex\],,\[Community Manager\],\[Jogging\],\[Side Hustle\] Increased"            
             $ chi.character.path = "Party Animal"
             $ chi.character.stats['Socialite'] += 30
@@ -49,13 +57,14 @@ label start:
             $ chi.character.stats['Eating Out'] += 50
             $ chi.character.stats['Casual Sex'] += 30
             $ chi.character.stats['Community Manager'] += 50
+            narrator "-4000 Added to your Checking Account"
             $ chi.character.stats['Checking Account'] -= 4000
 
     narrator "Great, what a life you\'ve led up till now. Here, have a little gift. Now let us get started."
     narrator "OBTAINED \[20 Dollars\]"
     $ inventory_items['20 Dollar Bill'] = "A Crisp Twenty Dollar Bill"
     $ objectives['Complete Act One'] = "In Progress"
-    tutorial "Maybe you should go to the bank to deposit this. Or maybe you can buy yourself a lunch"
+    tutorial "Maybe you should go to the bank to deposit this. Or maybe you can buy yourself a lunch?"
 
     # Options per path
     narrator "The story begins with you at your desk, managing some paper work. The jobs that come in are never that quick, so theres plenty of time to take case notes and file the neccisary paperwork."
@@ -63,10 +72,13 @@ label start:
     menu:
         "Chinese":
             narrator "Mandarin or Can- never mind you are learning Mando, for your families sake."
+            $ chi.perks.append("Yellow Fever")
         "French":
             narrator "You never went to France, but you secretly always thought the language seemed sexy."
+            $ chi.perks.append("Surrender Fries")
         "German":
             narrator "You met a German girl once, and on the off chance all German girls are like that, you want to be prepared this time."
+            $ chi.perks.append("JaegarMeister")
     
     tutorial "Oh look, I think someone is coming up the stairs to your office now."
     narrator "A man walks in, wearing a plaid shirt and jeans, neither of which is tucked or sized properly. You see his undershirt visibly but you decide it is not worth mentioning."
@@ -127,6 +139,7 @@ label start:
     menu:
         "Lie \[900 plus fees\]":
             chi.character "The total cost for finding him is 900, and if my costs exceed the initial 500 you give me, I will notify you and charge extra."
+            lie_to_client = True
          "Tell the truth \[500 plus fees\]":
             chi.character "The total cost for finding him is 500, and if my costs exceed the initial 500 you give me, I will notify you and charge extra."   
     client.character "Oh yeah, got it. *scribbles* And nah, he lived alone, and he didn't mention a girlfriend or anything."
@@ -139,6 +152,7 @@ label start:
     chi.character "Should be fine"
     client.character "Ok detective, looking forward to hearing from you. Is it weird I think this is kinda cool?"
     chi.character "I guess not, it is why I started doing it in the first place. And yes I will update you with anything I find."
+    client.character "With a quick shuffle and a little gesture that might have been a bow, he closes the door behind him as he leaves."
 
     jump act_one
 
@@ -177,9 +191,16 @@ label act_one:
 label bill_residence_options:
     menu:
         "Check out the kitchen counter":
-            narrator "The kitchen counter "
+            narrator "The kitchen counter has a mess of papers, and you take on to the task of sifting through them"
+            narrator "Outside of a few bills and spam letters about zero down mortgages or discount gym memberships, there does not seem to be much"
+            chi.character "Ugh..."
+            narrator "In the mess of papers you accidently touch a napkin with some sticky...sauce? on it."
+            narrator "You go to the sink to wash it off until you realize there is no water coming out of the faucet"
+            $ chi.perks.append['Sticky Fingers']
         "Check out the papers on the ottoman":
-            narrator ""
+            narrator "The papers on the ottoman are a lot more organized than those on the kitchen counter, it seems that someone was reading through them"
+            narrator "Taking a quick look reveals a lot of transactions, mostly transaction out of a checking account."
+            narrator "Mixed in with the statements are slips that seem to be betting slips, though you do not recognize them from any of the official casinos or horse tracks nearby."
         "Look for the bedroom":
             narrator "Looking around for a bedroom, it became quickly apparent that this was a studio apartment"
             chi.character "Lets see....yup theres a lever on the couch"
@@ -237,6 +258,10 @@ label eva_questioning:
                     tutorial "Stats refer to gaining benefits for individual members, such as more trust or less fear"
                     tutorial "Favors are consumable passes that allow you to bypass certain events or gain items you may have missed."
                     tutorial "Perks allow you to benefit from getting further embedded in certain communities."
+                    eva.character "Well dear, I must get back to check on the roast, but call out if you need anything from me, I am over there"
+                    narrator "She motions for the door with \"301\" on a plaque at eye level"
+                    chi.character "I think I am good here, but I am grateful, miss eva."
+                    narrator "With a quick wave she leaves for her door 301."
 
     narrator "End of Act One"
 
