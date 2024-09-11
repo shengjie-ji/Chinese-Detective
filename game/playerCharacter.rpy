@@ -1,4 +1,4 @@
-init -99 python:
+init -98 python:
   # Using Composition
   class PlayerCharacter:
       def __init__(self, name, stats, **kwargs):
@@ -18,5 +18,8 @@ define chi      = PlayerCharacter('Song Qi', stats = {
     'Socialite'         : 0,
     'Community Manager' : 0,
     'Divine Believer'   : 0
+    'Tech Sector'       : 0
+    'Checking Account'  : 0
     },
+    path = "",
     color = (19, 252, 3)) 

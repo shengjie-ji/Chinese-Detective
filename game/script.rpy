@@ -1,152 +1,92 @@
-﻿init:
-
-    ### Backgrounds
-    image home_office = 'office.jpg'
-
-    ### Screen Init
-    $ config.window_title = 'Chinatown Detective'
-
-    ### Inventory System
-    screen inventory_display:
-        zorder 92
-        frame:
-            background "#9F99"
-            xalign 0.05
-            yalign 0.1
-
-        hbox:
-            textbutton "Inventory":
-                action ToggleScreen("inventory_description")
-                style "inv_button"
-            textbutton "Objectives":
-                action ToggleScreen("current_objectives")
-                style "inv_button"
-
-        on "hide" action Hide("inventory_description")
-
-    default inventory_items = {}
-    default item_description = ""
-    default objectives = {}
-    default objective_description = ""
-
-    style inv_button is frame:
-        xsize 200
-        ysize 100
-
-    style inv_button_text:
-        xalign 0.5
-        yalign 0.5
-
-    screen inventory_description:
-        
-        window:
-            background "#AAA9"
-            xsize 600
-            ysize 150
-            xalign 0.5
-            yalign 0.1
-            text item_description:
-                xfill True
-                yfill True
-
-        window:
-            background "#99F9"
-            xsize 1290
-            ysize 600
-            xalign 0.5
-            yalign 0.7
-            hbox:
-                box_wrap True
-                box_wrap_spacing 10
-                spacing 10
-                xoffset 20
-                yoffset 20
-                style_prefix "inv"
-                for item in inventory_items:
-                    textbutton item:
-                        action SetVariable("item_description", inventory_items.get(item))
-                        selected False
-
-        on "hide" action SetVariable("item_description", "")
-
-    ### Objectives
-    screen current_objectives:
-
-        window:
-            background "#AAA9"
-            xsize 600
-            ysize 150
-            xalign 0.5
-            yalign 0.1
-
-        window: 
-            background "#99F9"
-            xsize 1290
-            ysize 600
-            xalign 0.5
-            yalign 0.7
-            hbox:
-                box_wrap True
-                box_wrap_spacing 10
-                spacing 10
-                xoffset 20
-                yoffset 20
-                style_prefix "obj"
-                for objective in objectives:
-                    textbutton objective:
-                        action SetVariable("objective_description", objectives.get(objective))
-                        selected False
-
-        on "hide" action SetVariable("objective_description", "")
-
-    ### Gallery
-    screen gallery:
-        tag menu
-
-        grid 3 2:
-            xalign 0.5 yalign 0.5
-
-            # Introduction Image 
-            # add "unlocked_image_1.jpg" if persistent.image1_unlocked else "locked_image.jpg"
-            textbutton "Return" action Return()
-
-
-# Flags
-    default divine_belief = False
-
-
-
+﻿# 184 | 252
 label start:
     
     # Transition 
     show screen inventory_display
     scene bg home_office with dissolve
 
+    # Introduction Scene 
 
-    narrator "The story begins in the seat of the Qi Agency; a private eye agency where you, Song Qi, are the sole dick working cases for the people of the community of Forest Hills."
-    narrator "A neighborhood in Queens, NY that, despite its small size and large home, is home to 100,000 residents, you are kept quite busy on a week to week basis."
-    narrator "You hear a knock on your door"
-    chi.character "Come in, the door is unlocked"
-    narrator "Before the man comes in and starts act one, lets give you a little freebie"
-    $ inventory_items["5 Dollars"] = "A crisp five dollar bill."
-    narrator "OBTAINED \[5 Dollars\]"
+    narrator "You are a private eye by the name of Song Qi"
+    narrator "Aged 32 years, you work on cases for the local community of Forest Hills"
+    narrator "Forest Hills, an area of Queens, New York with a population of 100,000 people and growing"
+    narrator "Having led a life of full but nonetheless incomplete stories"
+    narrator "This led you to try to make a living solving a variety of low risk but nonetheless important problems"
+    narrator "Starting in high school and then going on to college, you focused primarily on..."
+    menu:
+        "Getting into the best college":
+            narrator "And as a result, you managed to get into one of your target school, but with a full ride, so few tears were shed there."
+            narrator "Keeping in line with your ambition, you decided to study computer science"
+            narrator "After long hours and long applications, you worked in Silicon Valley for a while"
+            narrator "But the tedium and tickets got to you, and after saving up, you got a small place back home in New York and quit."
+            narrator "\[Tech Sector\],\[Gamer\],\[Side Hustle\] Increased" 
+            $ chi.character.path = 'Tech Bro'
+            $ chi.character.stats['Tech Sector'] += 50
+            $ chi.character.stats['Gamer'] += 50
+            $ chi.character.stats['Side Hustle'] += 50
+            $ chi.character.stats['Checking Account'] += 4000
+        "I wanted to see the world":
+            narrator "You knew academics were important, but you also knew life was meant to be lived."
+            narrator "You applied for a larger liberal arts college in the middle of nowhere, before proceeding to be nowhere in the country for most of the year."
+            narrator "Costs were something you tried hard to budget for, but traveling around was never going to be free, either."
+            narrator "\[Debt\] Increased Moderately"
+            narrator "\[Socialite\],\[Reader\],\Eating Out\],,\[Casual Sex\] Increased"
+            $ chi.character.path = 'Traveler'
+            $ chi.character.stats['Socialite'] += 20
+            $ chi.character.stats['Reader'] += 20
+            $ chi.character.stats['Eating Out'] += 50
+            $ chi.character.stats['Casual Sex'] += 30
+            $ chi.character.stats['Checking Account'] -= 2000
+        "Having fun while my body and time were mine":
+            narrator "It wasn\'t being bad at school that stopped you from caring. It was just not as interesting as what life had to offer."
+            narrator "After making friends with some people that didn\'t take things as seriously, you started, for the first time since you were a kid, having fun."
+            narrator "You were smart enough to keep yourself out of most trouble, but looking for novelty and quite honestly fun led to a few bumps and scars. But you liked that."   
+            narrator "When you came back to settle down a bit you were out of money, but a world of experience meant you built up friends quickly."
+            narrator "\[Socialite\],\[Raver\],\Eating Out\],,\[Casual Sex\],,\[Community Manager\],\[Jogging\],\[Side Hustle\] Increased"            
+            $ chi.character.path = "Party Animal"
+            $ chi.character.stats['Socialite'] += 30
+            $ chi.character.stats['Raver'] += 20
+            $ chi.character.stats['Eating Out'] += 50
+            $ chi.character.stats['Casual Sex'] += 30
+            $ chi.character.stats['Community Manager'] += 50
+            $ chi.character.stats['Checking Account'] -= 4000
+
+    narrator "Great, what a life you\'ve led up till now. Here, have a little gift. Now let us get started."
+    narrator "OBTAINED \[20 Dollars\]"
+    $ inventory_items['20 Dollar Bill'] = "A Crisp Twenty Dollar Bill"
     $ objectives['Complete Act One'] = "In Progress"
+    tutorial "Maybe you should go to the bank to deposit this. Or maybe you can buy yourself a lunch"
 
+    # Options per path
+    narrator "The story begins with you at your desk, managing some paper work. The jobs that come in are never that quick, so theres plenty of time to take case notes and file the neccisary paperwork."
+    tutorial "If you were being honest with yourself, it has actually been slower than usual. So much so you decided to try learning a new language"
+    menu:
+        "Chinese":
+            narrator "Mandarin or Can- never mind you are learning Mando, for your families sake."
+        "French":
+            narrator "You never went to France, but you secretly always thought the language seemed sexy."
+        "German":
+            narrator "You met a German girl once, and on the off chance all German girls are like that, you want to be prepared this time."
+    
+    tutorial "Oh look, I think someone is coming up the stairs to your office now."
+    narrator "A man walks in, wearing a plaid shirt and jeans, neither of which is tucked or sized properly. You see his undershirt visibly but you decide it is not worth mentioning."
+    
     # Script 
-    client.character "Is this the detective agency? I called ahead."
-    chi.character "Yeah, you said you had a problem? How can I help?"
-    "The client looks around."
-    client.character "I always thought they were bigger nowadays. I was a bit panicked so I went with the closest one, but I'm not sure this is the best option."
+    client.character "Is this the...Qi detective agency? Sorry, I called ahead but I don\'t want to butcher the name."
+    chi.character "Yeah, you said you had a problem with finding a friend? How can I help?"
+    narrator "The client takes a long glance around the space you call an office"
+    client.character "I always thought they were bigger nowadays. I was also a bit short on time and panicked so I went with the closest one"
+    client.character "Sorry I am new to this, but I am not sure this is the best option?"
     chi.character "I can't blame you, but if it helps, my reviews have been pretty good, and we try to keep our prices low."
     client.character "We?"
-    chi.character "We work with consultants that we call as needed for cases. I even have one for animals in case a lost animal is found by a shelter or something."
+    chi.character "I work with consultants that are called as needed for cases. I even have one for animals in case a lost animal is found by a shelter or something."
     client.character "Ah, well, sounds like you have a lot of experience, at least. In that case, can you help with a missing person's case?"
     chi.character "Sure. Tell me the story and why you're concerned."
     client.character "Basically, I had a bet with this friend of mine, and he lost."
     client.character "We've been friends since we were kids, so when he would complain about the bet amount, I told him we could back out, but I guess he was being stubborn." 
     client.character "Anyways, after he lost the bet, I figured I would give him some time to grieve before asking for the money."
     chi.character "How much was the amount, and what was the bet about?"
-    client.character "5000, and whether the Mets were going to sweep their game against the Marlins."   
+    client.character "1000, and whether the Mets were going to sweep their game against the Marlins."   
     "Writes down the information."
     chi.character "Gotcha, that was last Sunday, right?"
     client.character "Yeah."
@@ -154,7 +94,8 @@ label start:
     client.character "Yeah, well, we don't really chat much, but we like to hang out for poker night, and he would at least text one of us if he wasn't coming."
     chi.character "Okay. So, good news: I can take this case on. As a disclaimer, I am not allowed by law to tail anyone or offer surveillance in any restricted area. With those conditions, would you still like to hire our services?"
     client.character "Honestly, yeah. It's not like he or I are spies or anything. I just want to know if he's hiding in a hotel nearby or something. He can't have gotten far; his car is still parked nearby. Here, a key to his place; we keep each other's for emergencies before you ask about how I got it or whatever."
-    chi.character "I guess it can't hurt. I know the building super, so at worst, it'll be an apology for wasting his time."
+    chi.character "I guess it can't hurt. I know that building has a super, so at worst, it'll be an apology for wasting his time."
+    client.character "Yea, I have the keys to his place, so I can let you in with it."
 
     client.character "Awesome. So are you saying you\'ll take the case?"
     narrator "He takes a small key fob out of his pocket, with one of the medium sized keys pointed out at you."
@@ -162,48 +103,42 @@ label start:
     menu:
         "Sure":
             chi.character "Sure I'll take the case."
+            narrator "Key to Residence OBTAINED"
             $ inventory_items["Key to Residence"] = "A key that supposedly opens the door to Bill\'s apartment door. We have been given permission to access it, but we should probably check with the super or doorman first."
-            client.character "Great, it says on the key fob, but he lives at 145 108th Street, and the apartment is unit 305."
-            chi.character "If you don\'t mind, I assume that you are in contact with his doorman or super if you have his key? Can you call ahead for me?"
-            client.character "Oh sure, I just assumed it would be ok, apologies."
-            narrator "He averts his eyes a bit from you"
         "This sounds a bit awkward":
             chi.character "Are you sure you are better off not reporting this to the cops?"
             client.character "I had a little bit of trouble with the police, honestly I\'d rather not deal with them."
             client.character "Oh especially since the reason he might have ran off is the betting."
             chi.character "Is it so bad if its just you two as friends?"
-            client.character "I don\'t want to talk about it but its not just us."
+            client.character "Yea I think he would get mad at me if he found out I got the cops to look through his place"
+            client.character "He likes to smoke-"
+            client.character "Never mind"
             chi.character "Oh, I get it. No problem."
         "No":
-            chi.character "No"
-            client.character "Why?"
-            chi.character "I am operating as a detective or a federal agent, I can\'t go into someones house like that, even if you are giving me the key like this."
-            client.character "Oh."
-            client.character "In that case I can look around for you I guess? Maybe take a picture? I will not promise I can see things as you can, but you would have to wait until tonight."
-            client.character "Also, just for the record, I get it, but you kinda came off as a jerk. So since I am also putting in some work, I think its fair you give me a discount."
-            client.character "How much was it again for your services?"
-
-            menu:
-                '\[Lie\]\: It costs 1500, but I can make it 1000 and we call it even?':
-                    "Blah"
-                'I usually charge 1000 for a search of this scale, but 800 sounds reasonable.':
-                    "Blah"
-
-
+            chi.character "I have some more questions, otherwise I cannot accept"
+            client.character "Why not, I answered all your questions"
+            chi.character "Once again, I am not law enforcement. Your story sounds a bit odd, and potentially breaking into someones apartment-"
+            client.character "I have the key what do you mean breaking in?"
     client.character "Wow, you really know a lot of people."
     chi.character "Yeah, I specialize in the Forest Gardens area, so I figured you guys lived close by."
+    client.character "About 5 blocks away. For both of us I think."
     chi.character "I'll go take a look later this morning. Anything I should know about before I go? Also, I'll need your contact information, email and phone, phone preferred."
+    chi.character "I have an upfront deposit of five hundred dollars, for a case like this..."
+    menu:
+        "Lie \[900 plus fees\]":
+            chi.character "The total cost for finding him is 900, and if my costs exceed the initial 500 you give me, I will notify you and charge extra."
+         "Tell the truth \[500 plus fees\]":
+            chi.character "The total cost for finding him is 500, and if my costs exceed the initial 500 you give me, I will notify you and charge extra."   
     client.character "Oh yeah, got it. *scribbles* And nah, he lived alone, and he didn't mention a girlfriend or anything."
-    chi.character "That works. Okay, if I find out anything, I'll send you a message. My rate is per job, but for something like this, I would charge per day. I recommend you file a missing person's report right after if you haven't already. It can be a bit awkward, but it's for safety."
+    chi.character "That works. Okay, if I find out anything, I'll send you a message. I recommend you file a missing person's report right after if you haven't already. It can be a bit awkward, but it's for safety."
     client.character "Got it. Do you mind starting that? I'm already late for my job, and I kind of expected to have 5 grand more than I currently do."
-    chi.character "I can try, but you'll need to go down to the station across the street first. I can follow up for you, though. Don't worry, it takes five minutes. Just tell them chi.character sent you."
+    chi.character "I can try, but you'll need to go down to the station across the street first. I can follow up for you, though. Don't worry, it takes five minutes. Just tell them I sent you."
     client.character "Awesome, honestly I feel great about this already. Thanks, man."
-    chi.character "No problem, have a nice day."
-    narrator "You have the client fill out some paperwork, as well as some contact information in case you reach any breakthroughs in the case"
-    narrator "As he leaves with an awkward shuffle, you realize you never asked him name."
-    narrator "You look down to see what information he put down"
-    chi.character "Edward Collims, 123-456-7890..."
-    chi.character "He lives around the area, too. I guess this was his closest bet. Doesn\'t hurt that he probably planned to get a discount in the first place."
+    chi.character "No problem, have a nice day. Did you make sure to leave me your contact information?"
+    client.character "Oh yea you have my number on the form. I didn\'t give you my email though."
+    chi.character "Should be fine"
+    client.character "Ok detective, looking forward to hearing from you. Is it weird I think this is kinda cool?"
+    chi.character "I guess not, it is why I started doing it in the first place. And yes I will update you with anything I find."
 
     jump act_one
 
@@ -274,7 +209,6 @@ label bill_residence_options:
             eva.character "Don\'t let me get in the way, I will get out of your hair-"
             chi.character "Actually, I am quite glad you are here, do you mind if I ask a few questions?"
             eva.character "I have a roast in the oven but sure dear. "
-            chi.character "Appreciate it"
 
             jump eva_questioning
 
@@ -290,34 +224,21 @@ label eva_questioning:
                     eva.character "Thank you dear, but I am sure he is in a good place, and I hope to get there too one day."
                     $ eva.relationship['Memory'] -= 10
                     $ eva.relationship['Respect'] -= 10
-                    chi.character "I\'m sure you will, you are too kind not to."
-                    eva.character "Do you beleive in the divine, Mr. Qi?"
-                    menu:
-                        "Yes":
-                            chi.character "Yes"
-                            eva.character "That is lovely to hear, my dear. I don\'t mind too much what someone beleives in, as long as they believe in something."
-                            chi.character "Thank you, Miss Eva."
-                            divine_belief = True
-                        "No":
-                            chi.character "No"
-                            eva.character "No, I suppose not. It is not terribly popular amongst the younger generation, is it?"
-                            eva.character "But I hope you find it someday, however it may appear to you. It is just too important not to beleive in something."
-                            chi.character "... Thank you, Miss Eva."
-                            divine_belief = False
-
                 "\[Community Manager\] There is a ballroom dance class at the rec center each Thursday.":
                     narrator "Eva noticably lit up at the news"
                     eva.character "Oh that sounds lovely dear, can you help me sign up? I can make time for it this week if possible"
                     chi.character "Of course, I\'ll see if I can\'t do it on the way back to my office."
                     narrator "Side Quest \[Sign Eva up for Ballroom\] Started"
                     $ objectives['Sign Eva up for Ballroom'] = "In Progress"
+                    narrator "The Objective \[Sign Eva up for Ballroom\] has been started"
+                    tutorial "This is a side objective that you can complete while playing through each act"
+                    tutorial "Completion is optional, but you can gain some benefits from helping out the people around you."
+                    tutorial "This can be in the form of \[Stat Boosts\], \[Favors\] , or \[Perks\]"
+                    tutorial "Stats refer to gaining benefits for individual members, such as more trust or less fear"
+                    tutorial "Favors are consumable passes that allow you to bypass certain events or gain items you may have missed."
+                    tutorial "Perks allow you to benefit from getting further embedded in certain communities."
 
-        # Test Script
-        "I am here to find and kill him":
-            $ eva.relationship['Fear'] += 30
-            $ eva.relationship['Memory'] -= 15
-
-    narrator "End of Act 1"
+    narrator "End of Act One"
 
     jump act_two
 
@@ -326,7 +247,7 @@ label act_two:
 
     show screen inventory_display
     
-    narrator "\[Start of Act Two\]"
+    narrator "Act Two Begins"
 
     return
 
